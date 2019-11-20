@@ -3,6 +3,17 @@ QUICK STATEMENT API
 
 API built for personal bank statement analysis and quick matching/splitting/mapping to various income and expense categories.
 
+Tech Stack
+----------
+
+MongoDB for storing categories, statement entries, income and expense collections.
+
+Rails for API.
+
+RSpec for unit tests.
+
+Docker to run this project locally and in production.
+
 Quick Preview
 -------------
 
