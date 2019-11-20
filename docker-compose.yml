@@ -24,18 +24,6 @@ services:
     volumes:
       - quick-statement-mongo-data:/data/db
 
-  quick-statement-mongo-express:
-    container_name: quick-statement-mongo-express
-    image: mongo-express
-    ports:
-      - 8081:8081
-    links:
-      - quick-statement-mongo
-    environment:
-      ME_CONFIG_MONGODB_SERVER: quick-statement-mongo
-      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
-      ME_CONFIG_MONGODB_ADMINPASSWORD: admin
-
 volumes:
   quick-statement-mongo-data:
     driver: local
