@@ -70,16 +70,13 @@ RSpec.configure do |config|
     Income.collection.drop
   end
 
-  # start by truncating all the tables but then use the faster transaction strategy the rest of the time.
-  config.before(:suite) do
-    quick_db_cleanup
-  end
-
-  # start the transaction strategy as examples are run
+  # Cleanup database before each test run
   config.around(:each) do |example|
     quick_db_cleanup
 
     example.run
+
+    quick_db_cleanup
   end
 
   # RSpec Rails can automatically mix in different behaviours to your tests
