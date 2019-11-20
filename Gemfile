@@ -11,7 +11,7 @@ gem 'puma'
 gem 'bootsnap', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-gem 'rack-cors'
+gem 'rack-cors', '>= 1.0.4'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -51,6 +51,7 @@ end
 
 # Security fixes for 3rd party packages
 gem "nokogiri", ">= 1.10.4"
+gem "loofah", ">= 2.3.1"
 
 # Database 
 gem 'mongoid'
