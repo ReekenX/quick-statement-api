@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  quick-statement-api:
+    entrypoint: /project/.docker_boot_development.sh
+    ports:
+      - 0.0.0.0:8000:4000
+    stdin_open: true
+    tty: true
