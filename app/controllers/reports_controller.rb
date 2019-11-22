@@ -14,6 +14,10 @@ class ReportsController < ApplicationController
   # Returns global income/expenses report
   def show
     result = {
+      date: {
+        year: params[:year],
+        month: params[:month],
+      },
       total: {
         income: Income.all.map{|e| e.date.starts_with?(date_slug) ? e.amount : 0 }.sum || 0,
         expense: Expense.all.map{|e| e.date.starts_with?(date_slug) ? e.amount : 0 }.sum || 0,

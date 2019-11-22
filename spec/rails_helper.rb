@@ -65,7 +65,7 @@ RSpec.configure do |config|
 
   def quick_db_cleanup
     Category.collection.drop
-    Statement.collection.drop
+    Keyword.collection.drop
     Expense.collection.drop
     Income.collection.drop
   end

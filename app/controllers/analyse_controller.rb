@@ -16,8 +16,16 @@ class AnalyseController < ApplicationController
 
   def process_statement(statement)
     statement.map do |entry|
-      sentence = Statement.find(entry['title'])
-      entry['category'] = sentence.present? ? sentence.category : ''
+      categories = []
+      words = entry['title'].downcase.split(/[^[[:word:]]]+/)
+      words.each do |word|
+        keyword = Keyword.find(word)
+        if keyword && keyword.categories.count == 1
+          category, _ = keyword.categories.first
+          categories.push(category)
+        end
+      end
+      entry['category'] = categories[0] || ''
       entry
     end
   end

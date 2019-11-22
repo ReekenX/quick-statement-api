@@ -5,7 +5,7 @@ RSpec.describe 'Analysis API', type: :request do
     let(:endpoint) { '/analyse' }
     let(:json) { JSON(response.body, symbolize_names: true)  }
     let(:statement) { {
-      title: 'Some Purchase London',
+      title: 'MCDONALDS 9059353 Rang LT07156 Vilnius',
       category: 'Food',
       date: '2019-01-01',
       amount: 200,
@@ -28,23 +28,25 @@ RSpec.describe 'Analysis API', type: :request do
     end
 
     it 'returns statement category empty when no keywords' do
-      Statement.collection.drop
-
       post endpoint, params: { statement: [statement] }
       expect(json[0][:category]).to eq('')
     end
 
-    it 'returns statement category when sentence is registered' do
-      Statement.collection.drop
-      statement[:id] = statement[:title]
-      Statement.create(statement.except(:title, :type, :date, :amount))
+    it 'returns statement category when keyword is registered' do
+      Keyword.create(id: 'mcdonalds', categories: { "#{statement[:category]}": 3 })
 
       post endpoint, params: { statement: [statement] }
       expect(json[0][:category]).to eq(statement[:category])
     end
 
-    it 'returns same id field so this could be identified later' do
-      Statement.collection.drop
+    it 'does not return category when keyword has multiple categories registered' do
+      Keyword.create(id: 'mcdonalds', categories: { "#{statement[:category]}": 3, "Rental": 2 })
+
+      post endpoint, params: { statement: [statement] }
+      expect(json[0][:category]).to eq('')
+    end
+
+    it 'returns same id field so this could be identified later by remote system' do
       statement[:id] = 'test123'
 
       post endpoint, params: { statement: [statement] }

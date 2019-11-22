@@ -20,17 +20,37 @@ class StoreController < ApplicationController
 
   def process_statement(statement)
     statement.map do |entry|
-      if Statement.find(entry['title']).blank?
-        entry['id'] = entry['title']
-        Statement.create(entry.except(:title, :date, :amount))
+      category = entry['category']
+
+      words = entry['title'].downcase.split(/[^[[:word:]]]+/)
+      words
+        .select do |word|
+          word.size > 3 && word =~ /[a-zA-Z]+/
+        end
+        .each do |word|
+          keyword = Keyword.find(word)
+          if keyword
+            keyword.update(
+              categories: keyword['categories'].merge("#{category}": (keyword['categories'][category]  || 0) + 1)
+            )
+          else
+            Keyword.create(id: word, categories: { "#{category}": 1 })
+          end
+        end
+
+      # Register category if needed
+      if Category.find(category).blank?
+        Category.create(id: category)
       end
 
-      if Category.find(entry['category']).blank?
-        Category.create(id: entry['category'])
+      # Register income or expense
+      model = entry['type'] == 'income' ? Income : Expense
+      obj = model.find_by(title: entry['title'], amount: entry['amount'], date: entry['date'])
+      if obj.present?
+        obj.update(category: entry['category'])
+      else
+        model.create(entry.except(:id, :type))
       end
-
-      Income.create(entry.except(:id, :type)) if entry['type'] == 'income'
-      Expense.create(entry.except(:id, :type)) if entry['type'] == 'expense'
     end
   end
 end
