@@ -38,6 +38,10 @@ class ReportsController < ApplicationController
         .map{|e| e.date.starts_with?(date_slug) ? e.amount : 0 }.sum || 0
     end
 
+    # Sort by descending order income/expense categories
+    result[:income] = result[:income].sort_by{ |_, val| val }.reverse.to_h
+    result[:expense] = result[:expense].sort_by{ |_, val| val }.reverse.to_h
+
     render json: result
   end
 
