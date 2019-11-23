@@ -58,15 +58,15 @@ RSpec.describe 'Reports API', type: :request do
     end
 
     it 'returns current month category reports' do
-      Category.create(id: entry[:category])
-      Expense.create(entry.merge(amount: 10))
-      Expense.create(entry.merge(date: '2019-02-01'))
-      Income.create(entry.merge(amount: 1))
+      Category.create(id: 'Food', type: 'expense')
+      Category.create(id: 'Salary', type: 'income')
+      Expense.create(entry.merge(amount: 10, category: 'Food'))
+      Income.create(entry.merge(amount: 1000, category: 'Salary'))
 
       get endpoint
 
-      expect(json[:categories][:Food][:income]).to eq(1)
-      expect(json[:categories][:Food][:expense]).to eq(10)
+      expect(json[:expense][:Food]).to eq(10)
+      expect(json[:income][:Salary]).to eq(1000)
     end
   end
 end

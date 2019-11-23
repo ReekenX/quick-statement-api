@@ -22,14 +22,20 @@ class ReportsController < ApplicationController
         income: Income.all.map{|e| e.date.starts_with?(date_slug) ? e.amount : 0 }.sum || 0,
         expense: Expense.all.map{|e| e.date.starts_with?(date_slug) ? e.amount : 0 }.sum || 0,
       },
-      categories: {}
+      income: {},
+      expense: {}
     }
 
-    Category.all.each do |category|
-      result[:categories][category.id] = {
-        income: Income.all.map{|e| e.date.starts_with?(date_slug) && e.category == category.id ? e.amount : 0 }.sum || 0,
-        expense: Expense.all.map{|e| e.date.starts_with?(date_slug) && e.category == category.id ? e.amount : 0 }.sum || 0,
-      }
+    Category.where(type: 'income').each do |category|
+      result[:income][category.id] = Income
+        .where(category: category.id)
+        .map{|e| e.date.starts_with?(date_slug) ? e.amount : 0 }.sum || 0
+    end
+
+    Category.where(type: 'expense').each do |category|
+      result[:expense][category.id] = Expense
+        .where(category: category.id)
+        .map{|e| e.date.starts_with?(date_slug) ? e.amount : 0 }.sum || 0
     end
 
     render json: result

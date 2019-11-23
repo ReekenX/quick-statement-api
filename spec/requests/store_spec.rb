@@ -74,7 +74,7 @@ RSpec.describe 'Store API', type: :request do
     end
 
     it 'does not make duplicate categories' do
-      Category.create(id: statement[:category])
+      Category.create(id: statement[:category], type: statement[:type])
       post endpoint, params: { statement: [statement] }
 
       expect(Category.count).to eq(1)

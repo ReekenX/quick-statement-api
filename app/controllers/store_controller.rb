@@ -23,11 +23,11 @@ class StoreController < ApplicationController
       category = entry['category']
 
       # Register category if needed
-      Category.find_or_create_by(id: category)
+      Category.find_or_create_by(id: category, type: entry['type'])
 
       # Register income or expense
       model = entry['type'] == 'income' ? Income : Expense
-      obj = model.find_by(title: entry['title'], amount: entry['amount'], date: entry['date'])
+      obj = model.find_by(title: entry['title'], amount: entry['amount'].to_s, date: entry['date'])
       if obj.present?
         self.reduce_keywords_count(entry, obj['category'])
         self.incrase_keywords_count(entry)
