@@ -1,41 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Reports API', type: :request do
-  describe 'GET /reports' do
-    let(:endpoint) { '/reports' }
-    let(:json) { JSON(response.body, symbolize_names: true)  }
-    let(:entry) { {
-      title: 'Something',
-      date: '2019-01-01',
-      amount: 200,
-      category: "Food"
-    }}
-
-    it 'returns status code 200' do
-      get endpoint
-
-      expect(response).to have_http_status(:ok)
-    end
-
-    it 'returns global income report' do
-      Income.create(entry)
-
-      get endpoint
-
-      expect(json[:expense]).to eq(0)
-      expect(json[:income]).to eq(200)
-    end
-
-    it 'returns global expense report' do
-      Expense.create(entry)
-
-      get endpoint
-
-      expect(json[:expense]).to eq(200)
-      expect(json[:income]).to eq(0)
-    end
-  end
-
   describe 'GET /reports/:year/:month' do
     let(:endpoint) { '/reports/2019/01' }
     let(:json) { JSON(response.body, symbolize_names: true)  }

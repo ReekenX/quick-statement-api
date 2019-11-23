@@ -1,14 +1,4 @@
 class ReportsController < ApplicationController
-  # GET /reports
-  #
-  # Returns global income/expenses report
-  def index
-    render json: {
-      income: Income.all.map{|e| e.amount}.sum || 0,
-      expense: Expense.all.map{|e| e.amount}.sum || 0
-    }
-  end
-
   # GET /reports/:year/:month
   #
   # Returns global income/expenses report
