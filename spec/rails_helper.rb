@@ -64,6 +64,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 
   def quick_db_cleanup
+    Month.collection.drop
     Category.collection.drop
     Keyword.collection.drop
     Expense.collection.drop

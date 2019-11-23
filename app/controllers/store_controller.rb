@@ -25,13 +25,16 @@ class StoreController < ApplicationController
       # Register category if needed
       Category.find_or_create_by(id: category, type: entry['type'])
 
+      # Register month entry
+      Month.find_or_create_by(id: entry['date'].split('-')[0..1].join('-'))
+
       # Register income or expense
       model = entry['type'] == 'income' ? Income : Expense
       obj = model.find_by(title: entry['title'], amount: entry['amount'].to_i, date: entry['date'])
       if obj.present?
         self.reduce_keywords_count(entry, obj['category'])
         self.incrase_keywords_count(entry)
-        obj.update(category: entry['category'])
+        obj.update(category: category)
       else
         model.create(entry.except(:id, :type))
         self.incrase_keywords_count(entry)

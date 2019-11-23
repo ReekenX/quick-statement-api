@@ -43,3 +43,4 @@ Following endpoints are public (no need to authorize).
 | `POST /analyse`              | Analyse statement row and detects category if possible.                       |
 | `POST /store`                | Stores already processed row to database.                                     |
 | `GET /reports/:year/:month`  | Returns income and expenses report for current moth globally and by category. |
+| `GET /months                 | Returns list of year-month for which there are income/expense stored.         |
