@@ -101,12 +101,19 @@ RSpec.describe 'Store API', type: :request do
       expect(Keyword.find('mcdonalds').categories).to eq({ 'Food' => 2 })
     end
 
-    it 'should add category another category for ambigous keyword' do
+    it 'should not increase category count for the same statement' do
+      post endpoint, params: { statement: [statement] }
+      post endpoint, params: { statement: [statement] }
+
+      expect(Keyword.find('mcdonalds').categories).to eq({ 'Food' => 1 })
+    end
+
+    it 'should add another category for ambigous keyword' do
       post endpoint, params: { statement: [statement] }
       statement[:category] = 'Rental'
       post endpoint, params: { statement: [statement] }
 
-      expect(Keyword.find('mcdonalds').categories).to eq({ 'Food' => 1, 'Rental' => 1})
+      expect(Keyword.find('mcdonalds').categories).to eq({ 'Food' => 0, 'Rental' => 1})
     end
   end
 end
