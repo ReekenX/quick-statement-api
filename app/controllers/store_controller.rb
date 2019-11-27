@@ -26,7 +26,16 @@ class StoreController < ApplicationController
       Category.find_or_create_by(id: category, type: entry['type'])
 
       # Register month entry
-      Month.find_or_create_by(id: entry['date'].split('-')[0..1].join('-'))
+      year, month = entry['date'].split('-')
+      registered_year = Year.find(year)
+      if registered_year
+        unless registered_year.months.include?(month)
+          registered_year.months.push(month)
+          registered_year.save
+        end
+      else
+        Year.create(id: year, months: [month])
+      end
 
       # Register income or expense
       model = entry['type'] == 'income' ? Income : Expense

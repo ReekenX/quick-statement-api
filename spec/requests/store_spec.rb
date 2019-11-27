@@ -116,12 +116,19 @@ RSpec.describe 'Store API', type: :request do
       expect(Keyword.find('mcdonalds').categories).to eq({ 'Food' => 0, 'Rental' => 1})
     end
 
-    it 'should create month entries' do
-      post endpoint, params: { statement: [statement] }
-      statement[:date] = '2020-01-01'
+    it 'should create year entry' do
       post endpoint, params: { statement: [statement] }
 
-      expect(Month.count).to eq(2)
+      expect(Year.count).to eq(1)
+    end
+
+    it 'should add month to existing year' do
+      post endpoint, params: { statement: [statement] }
+      statement[:date] = '2019-02'
+      post endpoint, params: { statement: [statement] }
+
+      expect(Year.count).to eq(1)
+      expect(Year.first.months.count).to eq(2)
     end
   end
 end
