@@ -110,8 +110,6 @@ GEM
     puma (4.2.1)
       nio4r (~> 2.0)
     rack (2.0.7)
-    rack-cors (1.1.0)
-      rack (>= 2.0.0)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (6.0.0)
@@ -210,7 +208,6 @@ DEPENDENCIES
   mongoid
   nokogiri (>= 1.10.4)
   puma
-  rack-cors (>= 1.0.4)
   rails
   rspec-rails
   sentry-raven
