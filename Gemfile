@@ -48,7 +48,7 @@ end
 
 # Security fixes for 3rd party packages
 gem "nokogiri", ">= 1.10.4"
-gem "loofah", ">= 2.3.1"
+gem "loofah", ">= 2.4.0"
 
 # Database 
 gem 'mongoid'
