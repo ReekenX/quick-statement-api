@@ -1,4 +1,4 @@
-# QUICK STATEMENT API
+# Quick Statement API
 
 API built for personal bank statement analysis and quick matching/splitting/mapping to various income and expense categories.
 
