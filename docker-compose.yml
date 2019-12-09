@@ -13,6 +13,8 @@ services:
       - quick-statement-mongo
     volumes:
       - .:/project
+    networks:
+      - quick-statement-app_quick-statement-net
 
   quick-statement-mongo:
     container_name: quick-statement-mongo
@@ -23,7 +25,13 @@ services:
       MONGO_INITDB_DATABASE: quick_statement
     volumes:
       - quick-statement-mongo-data:/data/db
+    networks:
+      - quick-statement-app_quick-statement-net
 
 volumes:
   quick-statement-mongo-data:
     driver: local
+
+networks:
+  quick-statement-app_quick-statement-net:
+    external: true
