@@ -12,6 +12,12 @@ RSpec.describe 'Years API', type: :request do
       expect(response).to have_http_status(:ok)
     end
 
+    it 'returns status code 401 when unauthorized even with years registered' do
+      get endpoint
+
+      expect(response).to have_http_status(:unauthorized)
+    end
+
     it 'returns status code 200 when years registered' do
       Year.create(id: '2019', months: [1, 2])
 
@@ -44,15 +50,23 @@ RSpec.describe 'Years API', type: :request do
     it 'returns status code 200 when year is registered' do
       Year.create(id: '2019', months: [1, 2])
 
-      get endpoint, headers: auth_headers 
+      get endpoint, headers: auth_headers
 
       expect(response).to have_http_status(:ok)
+    end
+
+    it 'returns status code 401 when unauthorized requests for a year' do
+      Year.create(id: '2019', months: [1, 2])
+
+      get endpoint
+
+      expect(response).to have_http_status(:unauthorized)
     end
 
     it 'returns correct size of months' do
       Year.create(id: '2019', months: [1, 2, 3])
 
-      get endpoint, headers: auth_headers 
+      get endpoint, headers: auth_headers
 
       expect(json.size).to eq(3)
     end

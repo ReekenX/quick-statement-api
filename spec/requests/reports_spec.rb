@@ -23,6 +23,15 @@ RSpec.describe 'Reports API', type: :request do
       expect(json[:total][:income]).to eq(100)
     end
 
+    it 'returns status code 401 when not authorized' do
+      Expense.create(entry)
+      Income.create(entry.merge(amount: 100))
+
+      get endpoint
+
+      expect(response).to have_http_status(:unauthorized)
+    end
+
     it 'returns current month category reports' do
       Category.create(id: 'Food', type: 'expense')
       Category.create(id: 'Salary', type: 'income')

@@ -25,6 +25,12 @@ RSpec.describe 'Analysis API', type: :request do
       expect(response).to have_http_status(:ok)
     end
 
+    it 'returns status code 401 when not authorized but with correct statements array' do
+      post endpoint, params: { statement: [] }
+
+      expect(response).to have_http_status(:unauthorized)
+    end
+
     it 'returns the same amount of statement entries passed' do
       post endpoint, params: { statement: [statement] }, headers: auth_headers
 

@@ -25,6 +25,12 @@ RSpec.describe 'Store API', type: :request do
       expect(response).to have_http_status(:ok)
     end
 
+    it 'returns status code 401 when not authorized' do
+      post endpoint, params: { statement: [] }
+
+      expect(response).to have_http_status(:unauthorized)
+    end
+
     it 'stores category to the DB' do
       post endpoint, params: { statement: [statement] }, headers: auth_headers
 
