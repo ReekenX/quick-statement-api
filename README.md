@@ -45,8 +45,24 @@ Following endpoints are public (no need to authorize).
 | Endpoint                     | Description                                                                   |
 |:-----------------------------|:------------------------------------------------------------------------------|
 | `GET /`                      | Returns welcome message. Just to see if API is working.                       |
+
+## Private Endpoints
+
+Following endpoints are private. In order to use them, you need to send API token with every request.
+
+| Endpoint                     | Description                                                                   |
+|:-----------------------------|:------------------------------------------------------------------------------|
 | `POST /analyse`              | Analyse statement row and detects category if possible.                       |
 | `POST /store`                | Stores already processed row to database.                                     |
 | `GET /years`                 | Returns list of years that have income/expense reports.                       |
 | `GET /years/:month`          | Returns list of year months that have income/expense reports.                 |
 | `GET /reports/:year/:month`  | Returns income and expenses report for current moth globally and by category. |
+
+## API Token for Authorization
+
+Generate API token to authorize endpoints with:
+
+    $ docker exec -it quick-statement-api rake token:generate
+    New Token for API authorization: 54493095-4a46
+
+It will randomly generate API token. This token will be able to access all the data in the API / Mongo.
