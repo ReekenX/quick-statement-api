@@ -52,6 +52,7 @@ Following endpoints are private. In order to use them, you need to send API toke
 
 | Endpoint                     | Description                                                                   |
 |:-----------------------------|:------------------------------------------------------------------------------|
+| `POST /check`                | Endpoint to check if authorization token is valid.                            |
 | `POST /analyse`              | Analyse statement row and detects category if possible.                       |
 | `POST /store`                | Stores already processed row to database.                                     |
 | `GET /years`                 | Returns list of years that have income/expense reports.                       |

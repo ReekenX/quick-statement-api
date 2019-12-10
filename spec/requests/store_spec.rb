@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Store API', type: :request do
   describe 'POST /store' do
     let(:endpoint) { '/store' }
-    let(:auth_headers) {{ HTTP_AUTHORIZATION: ActionController::HttpAuthentication::Token.encode_credentials('test123') }}
+    let(:auth_headers) {{ HTTP_AUTHORIZATION: ActionController::HttpAuthentication::Token.encode_credentials(ENV.fetch('TEST_API_TOKEN')) }}
     let(:json) { JSON(response.body, symbolize_names: true)  }
     let(:statement) { {
       title: 'MCDONALDS 9059353 Rang LT07156 Vilnius 2BX 28',

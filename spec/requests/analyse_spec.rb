@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Analysis API', type: :request do
   describe 'POST /analyse' do
     let(:endpoint) { '/analyse' }
-    let(:auth_headers) {{ HTTP_AUTHORIZATION: ActionController::HttpAuthentication::Token.encode_credentials('test123') }}
+    let(:auth_headers) {{ HTTP_AUTHORIZATION: ActionController::HttpAuthentication::Token.encode_credentials(ENV.fetch('TEST_API_TOKEN')) }}
     let(:json) { JSON(response.body, symbolize_names: true)  }
     let(:statement) { {
       title: 'MCDONALDS 9059353 Rang LT07156 Vilnius',

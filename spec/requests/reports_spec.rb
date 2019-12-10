@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Reports API', type: :request do
   describe 'GET /reports/:year/:month' do
     let(:endpoint) { '/reports/2019/01' }
-    let(:auth_headers) {{ HTTP_AUTHORIZATION: ActionController::HttpAuthentication::Token.encode_credentials('test123') }}
+    let(:auth_headers) {{ HTTP_AUTHORIZATION: ActionController::HttpAuthentication::Token.encode_credentials(ENV.fetch('TEST_API_TOKEN')) }}
     let(:json) { JSON(response.body, symbolize_names: true)  }
     let(:entry) { {
       title: 'Something',

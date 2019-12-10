@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   def verify_api_token
     authenticate_or_request_with_http_token do |token, options|
-      test_token = ENV.fetch('RAILS_ENV') == 'test' ? token : nil
+      test_token = ENV.fetch('RAILS_ENV') == 'test' ? ENV.fetch('TEST_API_TOKEN') : nil
       token_from_db = Token.find_by(api_token: token).try(:api_token) || test_token
       ActiveSupport::SecurityUtils.secure_compare(token, token_from_db)
     end

@@ -72,9 +72,16 @@ RSpec.configure do |config|
     Income.collection.drop
   end
 
+  def token_setup
+    token_str = 'super-secret-token'
+    ENV['TEST_API_TOKEN'] = token_str
+    Token.create(api_token: token_str)
+  end
+
   # Cleanup database before each test run
   config.around(:each) do |example|
     quick_db_cleanup
+    token_setup
 
     example.run
 

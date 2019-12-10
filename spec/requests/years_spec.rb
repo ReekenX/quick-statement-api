@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Years API', type: :request do
   describe 'GET /years' do
     let(:endpoint) { '/years' }
-    let(:auth_headers) {{ HTTP_AUTHORIZATION: ActionController::HttpAuthentication::Token.encode_credentials('test123') }}
+    let(:auth_headers) {{ HTTP_AUTHORIZATION: ActionController::HttpAuthentication::Token.encode_credentials(ENV.fetch('TEST_API_TOKEN')) }}
     let(:json) { JSON(response.body, symbolize_names: true)  }
 
     it 'returns status code 200 even when no years registered' do
@@ -38,7 +38,7 @@ RSpec.describe 'Years API', type: :request do
 
   describe 'GET /years/:year' do
     let(:endpoint) { '/years/2019' }
-    let(:auth_headers) {{ HTTP_AUTHORIZATION: ActionController::HttpAuthentication::Token.encode_credentials('test123') }}
+    let(:auth_headers) {{ HTTP_AUTHORIZATION: ActionController::HttpAuthentication::Token.encode_credentials(ENV.fetch('TEST_API_TOKEN')) }}
     let(:json) { JSON(response.body, symbolize_names: true)  }
 
     it 'returns status code 404 when no such year registered' do
