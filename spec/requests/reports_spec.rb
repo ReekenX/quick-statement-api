@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Reports API', type: :request do
   describe 'GET /reports/:year/:month' do
     let(:endpoint) { '/reports/2019/01' }
+    let(:auth_headers) {{ HTTP_AUTHORIZATION: ActionController::HttpAuthentication::Token.encode_credentials('test123') }}
     let(:json) { JSON(response.body, symbolize_names: true)  }
     let(:entry) { {
       title: 'Something',
@@ -16,7 +17,7 @@ RSpec.describe 'Reports API', type: :request do
       Expense.create(entry.merge(date: '2019-02-01'))
       Income.create(entry.merge(amount: 100))
 
-      get endpoint
+      get endpoint, headers: auth_headers
 
       expect(json[:total][:expense]).to eq(200)
       expect(json[:total][:income]).to eq(100)
@@ -28,7 +29,7 @@ RSpec.describe 'Reports API', type: :request do
       Expense.create(entry.merge(amount: 10, category: 'Food'))
       Income.create(entry.merge(amount: 1000, category: 'Salary'))
 
-      get endpoint
+      get endpoint, headers: auth_headers
 
       expect(json[:expense][:Food]).to eq(10)
       expect(json[:income][:Salary]).to eq(1000)

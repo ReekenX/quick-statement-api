@@ -5,7 +5,7 @@ RSpec.describe 'Home API', type: :request do
     let(:endpoint) { '/' }
     let(:json) { JSON(response.body, symbolize_names: true)  }
 
-    it 'returns status code 200' do
+    it 'returns status code 200 when anonymous' do
       get endpoint
       expect(response).to have_http_status(:ok)
     end

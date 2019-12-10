@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  skip_before_action :verify_api_token
+
   # GET /
   #
   # Returns API status
