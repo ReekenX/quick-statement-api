@@ -26,7 +26,7 @@ Setup and launch APP project:
 
     git clone https://github.com/ReekenX/quick-statement-app.git
     cd quick-statement-app
-    docker-compose up --build
+    docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build
 
 After a minute or two project will be up and running on `http://localhost:3000`.
 
