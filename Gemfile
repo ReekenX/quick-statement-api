@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
@@ -39,7 +39,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :production do
   # Errors reporting
-  gem "sentry-raven"
+  gem 'sentry-raven'
 
   # Web server
   gem 'unicorn', require: false
@@ -47,8 +47,9 @@ group :production do
 end
 
 # Security fixes for 3rd party packages
-gem "nokogiri", ">= 1.10.4"
-gem "loofah", ">= 2.4.0"
+gem 'nokogiri', '>= 1.10.4'
+gem 'loofah', '>= 2.4.0'
+gem 'rack', '~> 2.0.8'
 
 # Database 
 gem 'mongoid'
