@@ -46,10 +46,5 @@ group :production do
   gem 'unicorn-rails'
 end
 
-# Security fixes for 3rd party packages
-gem 'nokogiri', '>= 1.10.4'
-gem 'loofah', '>= 2.4.0'
-gem 'rack', '~> 2.0.8'
-
 # Database 
 gem 'mongoid'
